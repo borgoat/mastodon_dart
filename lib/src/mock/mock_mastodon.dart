@@ -55,5 +55,5 @@ class MockAuthentication {
 
   MockAuthentication(this.baseUrl);
 
-  String token;
+  String? token;
 }

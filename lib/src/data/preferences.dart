@@ -12,20 +12,20 @@ part 'preferences.g.dart';
 )
 class UserPreferences {
   /// Default visibility for new posts. Enumerated by [PostingVisibility].
-  final PostingVisibility defaultPostingVisibility;
+  final PostingVisibility? defaultPostingVisibility;
 
   /// Default sensitivity flag for new posts
-  final bool isSensitiveByDefault;
+  final bool? isSensitiveByDefault;
 
   /// Default language for new posts
   @JsonKey(nullable: true)
   final dynamic defaultLanguage;
 
   /// Whether media attachments should be automatically displayed or blurred/hidden. Enumerated by [MediaDefaults].
-  final MediaDefaults mediaDefaults;
+  final MediaDefaults? mediaDefaults;
 
   /// Whether CWs should be expanded by default
-  final bool expandSpoilersByDefault;
+  final bool? expandSpoilersByDefault;
 
   UserPreferences({
     this.defaultPostingVisibility,

@@ -11,7 +11,7 @@ class MockStatuses {
 
   /// GET /api/v1/statuses/:id/card
   /// https://docs.joinmastodon.org/api/rest/statuses/#get-api-v1-statuses-id-card
-  Future<Card> card(String id) => Future.value(Card.mock());
+  Future<Card?> card(String id) => Future.value(Card.mock());
 
   /// GET /api/v1/statuses/:id/reblogged_by
   /// https://docs.joinmastodon.org/api/rest/statuses/#get-api-v1-statuses-id-reblogged-by
@@ -26,13 +26,13 @@ class MockStatuses {
   /// POST /api/v1/statuses
   /// https://docs.joinmastodon.org/api/rest/statuses/#post-api-v1-statuses
   Future<Status> publishStatus({
-    String status,
-    String inReplyToId,
-    List<String> mediaIds,
-    bool sensitive,
-    String spoilerText,
-    Visibility visibility,
-    DateTime scheduledAt,
+    String? status,
+    String? inReplyToId,
+    List<String>? mediaIds,
+    bool? sensitive,
+    String? spoilerText,
+    Visibility? visibility,
+    DateTime? scheduledAt,
     dynamic language,
   }) =>
       Future.value(Status.mock());

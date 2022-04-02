@@ -13,10 +13,10 @@ part 'context.g.dart';
 )
 class Context {
   /// Parents in the thread
-  final List<Status> ancestors;
+  final List<Status>? ancestors;
 
   /// Children in the thread
-  final List<Status> descendants;
+  final List<Status>? descendants;
 
   Context({
     this.ancestors,

@@ -13,31 +13,31 @@ part 'poll.g.dart';
 )
 class Poll {
   /// The ID of the poll in the database
-  final String id;
+  final String? id;
 
   /// When the poll ends
   @JsonKey(nullable: true)
-  final DateTime expiresAt;
+  final DateTime? expiresAt;
 
   /// Is the poll currently expired?
-  final bool expired;
+  final bool? expired;
 
   /// Does the poll allow multiple-choice answers?
-  final bool multiple;
+  final bool? multiple;
 
   /// How many votes have been received
-  final int votes_count;
+  final int? votes_count;
 
   /// How many unique accounts have voted on a multiple-choice poll
-  final int voters_count;
+  final int? voters_count;
 
   /// When called with a user token, has the authorized user voted?
   @JsonKey(nullable: true)
-  final bool voted;
+  final bool? voted;
 
   /// When called with a user token, which options has the authorized user chosen? Contains an array of index values for [options].
   @JsonKey(nullable: true)
-  final List<int> own_votes;
+  final List<int>? own_votes;
 
   /// Description: Possible answers for the poll.
   /// Type: Array of Hash
@@ -50,7 +50,7 @@ class Poll {
   @JsonKey(nullable: true)
   final dynamic options;
   /// Custom emoji to be used for rendering poll options
-  final List<Emoji> emojis;
+  final List<Emoji>? emojis;
 
   Poll({
     this.id,

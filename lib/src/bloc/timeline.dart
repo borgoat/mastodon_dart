@@ -1,11 +1,11 @@
 import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:rxdart/rxdart.dart';
 
-typedef StatusGetter = Future<List<Status>> Function(String maxId);
+typedef StatusGetter = Future<List<Status>> Function(String? maxId);
 
 class TimelineBloc {
   final StatusGetter fetchStatuses;
-  final Stream<dynamic> statusStream;
+  final Stream<dynamic>? statusStream;
 
   TimelineBloc(this.fetchStatuses, {this.statusStream}) {
     _requestingMore
@@ -16,7 +16,7 @@ class TimelineBloc {
     statusStream?.listen(_handlePayload);
   }
 
-  final Map<String, Status> _store = {};
+  final Map<String?, Status> _store = {};
 
   final _requestingMore = BehaviorSubject<bool>.seeded(true);
   final _statuses = BehaviorSubject<List<Status>>();
@@ -65,7 +65,7 @@ class TimelineBloc {
   /// Sort [_store.values] and emit a new event to [_statuses]
   _updateStatuses() {
     final _sortedStatuses = _store.values.toList()
-      ..sort((a, b) => b.id.compareTo(a.id));
+      ..sort((a, b) => b.id!.compareTo(a.id!));
 
     _statuses.add(_sortedStatuses);
   }

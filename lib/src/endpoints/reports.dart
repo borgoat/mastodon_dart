@@ -9,9 +9,9 @@ mixin Reports on Authentication, Utilities implements MockReports {
   /// - write write:reports
   Future<dynamic> report(
     String id, {
-    List<String> statusIds,
-    String comment,
-    bool forward,
+    List<String>? statusIds,
+    String? comment,
+    bool? forward,
   }) async {
     await request(
       Method.post,

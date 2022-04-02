@@ -9,7 +9,7 @@ class Authentication implements MockAuthentication {
   final Uri baseUrl;
 
   /// A (WebSocketChannel)[https://api.flutter.dev/flutter/dart-html/WebSocket-class.html] to receive data sent on a WebSocket
-  final WebSocketFactory websocketFactory;
+  final WebSocketFactory? websocketFactory;
 
   Authentication(this.baseUrl, {this.websocketFactory});
 
@@ -20,5 +20,5 @@ class Authentication implements MockAuthentication {
   Uri get authorizationUrl => baseUrl.replace(path: "/oauth/authorize");
 
   /// Authorization token
-  String token;
+  String? token;
 }

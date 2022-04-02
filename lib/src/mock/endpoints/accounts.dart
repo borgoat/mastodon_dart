@@ -23,11 +23,11 @@ class MockAccounts {
   /// PATCH /api/v1/accounts/update_credentials
   /// https://docs.joinmastodon.org/api/rest/accounts/#patch-api-v1-accounts-update-credentials
   Future<Account> updateCredentials({
-    String displayName,
-    String note,
+    String? displayName,
+    String? note,
     dynamic avatar,
     dynamic header,
-    bool locked,
+    bool? locked,
     dynamic sourcePrivacy,
     dynamic sourceSensitive,
     dynamic sourceLanguage,
@@ -52,9 +52,9 @@ class MockAccounts {
     bool onlyMedia = false,
     bool pinned = false,
     bool excludeReplies = false,
-    String maxId,
-    String sinceId,
-    String minId,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
     bool excludeReblogs = false,
   }) =>

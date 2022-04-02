@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import '../library.dart';
 
 import '../../src/mock/endpoints/custom_emojis.dart';
@@ -8,13 +10,13 @@ mixin CustomEmojis on Authentication, Utilities implements MockCustomEmojis {
   /// - public
   /// - scope not specified
   Future<List<Emoji>> emojis() async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/custom_emojis",
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
-    return body.map((m) => Emoji.fromJson(m)).toList();
+    return body.map((m) => Emoji.fromJson(m as Map<String, dynamic>)).toList();
   }
 }

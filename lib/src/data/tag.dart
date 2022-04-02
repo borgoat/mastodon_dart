@@ -13,14 +13,14 @@ part 'tag.g.dart';
 )
 class Tag {
   /// The value of the hashtag after the # sign
-  final String name;
+  final String? name;
 
   /// A link to the hashtag on the instance
-  final Uri url;
+  final Uri? url;
 
   /// Usage statistics for given days
   @JsonKey(nullable: true)
-  final List<History> history;
+  final List<History>? history;
 
   Tag({
     this.name,
@@ -50,15 +50,15 @@ class Tag {
 )
 class History {
   /// UNIX timestamp on midnight of the given day
-  final DateTime day;
+  final DateTime? day;
 
   /// The counted usage of the tag within that day
   @JsonKey(fromJson: _stringToInt)
-  final int uses;
+  final int? uses;
 
   /// The total of accounts using the tag within that day
   @JsonKey(fromJson: _stringToInt)
-  final int accounts;
+  final int? accounts;
 
   History({
     this.day,

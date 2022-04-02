@@ -1,6 +1,7 @@
-import '../library.dart';
+import 'dart:async';
 
 import '../../src/mock/endpoints/follow_requests.dart';
+import '../library.dart';
 
 mixin FollowRequests
     on Authentication, Utilities
@@ -10,20 +11,22 @@ mixin FollowRequests
   /// - authenticated (requires user)
   /// - read read:follows follow
   Future<List<Account>> followRequests({int limit = 40}) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/follow_requests",
       authenticated: true,
       payload: {
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
     /// TODO: implement link headers for pagination
 
-    return body.map((m) => Account.fromJson(m)).toList();
+    return body
+        .map((m) => Account.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// POST /api/v1/follow_requests/:id/authorize

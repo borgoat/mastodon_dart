@@ -1,5 +1,7 @@
-import '../library.dart';
+import 'dart:async';
+
 import '../../src/mock/endpoints/timelines.dart';
+import '../library.dart';
 
 mixin Timelines on Authentication, Utilities implements MockTimelines {
   /// GET /api/v1/timelines/home
@@ -7,12 +9,12 @@ mixin Timelines on Authentication, Utilities implements MockTimelines {
   /// - authenticated
   /// - read read:statuses
   Future<List<Status>> timeline({
-    String maxId,
-    String sinceId,
-    String minId,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
   }) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/timelines/home",
       authenticated: true,
@@ -22,7 +24,7 @@ mixin Timelines on Authentication, Utilities implements MockTimelines {
         "min_id": minId,
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     return List<Status>.from(
       json.decode(response.body).map((json) => Status.fromJson(json)),
@@ -34,12 +36,12 @@ mixin Timelines on Authentication, Utilities implements MockTimelines {
   /// authenticated
   /// read read:statuses
   Future<List<Conversation>> conversations({
-    String maxId,
-    String sinceId,
-    String minId,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
   }) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/conversations",
       authenticated: true,
@@ -49,7 +51,7 @@ mixin Timelines on Authentication, Utilities implements MockTimelines {
         "min_id": minId,
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     return List<Conversation>.from(
       json.decode(response.body).map((json) => Conversation.fromJson(json)),
@@ -61,14 +63,14 @@ mixin Timelines on Authentication, Utilities implements MockTimelines {
   /// - public
   /// - read read:statuses
   Future<List<Status>> publicTimeline({
-    bool local = false,
-    bool onlyMedia = false,
-    String maxId,
-    String sinceId,
-    String minId,
+    bool? local = false,
+    bool? onlyMedia = false,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
   }) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/timelines/public",
       authenticated: true,
@@ -80,7 +82,7 @@ mixin Timelines on Authentication, Utilities implements MockTimelines {
         "min_id": minId,
         "limit": "$limit",
       },
-    );
+    ) as FutureOr<Response>);
 
     return List<Status>.from(
       json.decode(response.body).map((json) => Status.fromJson(json)),
@@ -93,14 +95,14 @@ mixin Timelines on Authentication, Utilities implements MockTimelines {
   /// - read read:statuses
   Future<List<Status>> hashtagTimeline(
     String hashtag, {
-    bool local = false,
-    bool onlyMedia = false,
-    String maxId,
-    String sinceId,
-    String minId,
+    bool? local = false,
+    bool? onlyMedia = false,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
   }) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/timelines/tag/$hashtag",
       authenticated: true,
@@ -112,7 +114,7 @@ mixin Timelines on Authentication, Utilities implements MockTimelines {
         "min_id": minId,
         "limit": "$limit",
       },
-    );
+    ) as FutureOr<Response>);
 
     return List<Status>.from(
       json.decode(response.body).map((json) => Status.fromJson(json)),
@@ -125,11 +127,11 @@ mixin Timelines on Authentication, Utilities implements MockTimelines {
   /// - read read:statuses
   Future<List<Status>> listTimeline(
     String id, {
-    bool local,
-    bool onlyMedia,
-    String maxId,
-    String sinceId,
-    String minId,
+    bool? local,
+    bool? onlyMedia,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
   }) =>
       throw UnimplementedError();

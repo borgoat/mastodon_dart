@@ -1,5 +1,7 @@
-import '../library.dart';
+import 'dart:async';
+
 import '../../src/mock/endpoints/bookmarks.dart';
+import '../library.dart';
 
 /// https://docs.joinmastodon.org/methods/accounts/bookmarks/
 mixin Bookmarks on Authentication, Utilities implements MockBookmarks {
@@ -10,20 +12,20 @@ mixin Bookmarks on Authentication, Utilities implements MockBookmarks {
   /// - authenticated (requires user)
   /// - read read:favourites
   Future<List<Status>> bookmarks({int limit = 40}) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/bookmarks",
       authenticated: true,
       payload: {
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
     /// TODO: implement link headers for pagination
 
-    return body.map((m) => Status.fromJson(m)).toList();
+    return body.map((m) => Status.fromJson(m as Map<String, dynamic>)).toList();
   }
 
   /// Privately bookmark a status.
@@ -33,11 +35,11 @@ mixin Bookmarks on Authentication, Utilities implements MockBookmarks {
   /// - authenticated
   /// - write write:bookmarks
   Future<Status> bookmark(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/statuses/$id/bookmark",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     return Status.fromJson(json.decode(response.body));
   }
@@ -49,11 +51,11 @@ mixin Bookmarks on Authentication, Utilities implements MockBookmarks {
   /// - authenticated
   /// - write write:bookmarks
   Future<Status> unbookmark(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/statuses/$id/unbookmark",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     return Status.fromJson(json.decode(response.body));
   }

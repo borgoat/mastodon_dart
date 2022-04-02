@@ -1,6 +1,7 @@
-import '../library.dart';
+import 'dart:async';
 
 import '../../src/mock/endpoints/accounts.dart';
+import '../library.dart';
 
 /// Methods concerning user accounts and related information.
 /// https://docs.joinmastodon.org/methods/accounts/
@@ -13,10 +14,10 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
   /// - public
   /// - read read:accounts
   Future<Account> account(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/accounts/$id",
-    );
+    ) as FutureOr<Response>);
 
     return Account.fromJson(json.decode(response.body));
   }
@@ -32,7 +33,7 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
     bool agreement,
     String locale,
   ) async {
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/accounts",
       authenticated: true,
@@ -43,7 +44,7 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
         "agreement": agreement.toString(),
         "locale": locale,
       },
-    );
+    ) as FutureOr<Response>);
 
     return Token.fromJson(json.decode(response.body));
   }
@@ -55,11 +56,11 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
   /// - authenticated (requires user)
   /// - read read:accounts
   Future<Account> verifyCredentials() async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/accounts/verify_credentials",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     return Account.fromJson(json.decode(response.body));
   }
@@ -71,17 +72,17 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
   /// - authenticated (requires user)
   /// - write write:accounts
   Future<Account> updateCredentials({
-    String displayName,
-    String note,
+    String? displayName,
+    String? note,
     dynamic avatar,
     dynamic header,
-    bool locked,
+    bool? locked,
     dynamic sourcePrivacy,
     dynamic sourceSensitive,
     dynamic sourceLanguage,
     dynamic fieldsAttributes,
   }) async {
-    final response = await request(
+    final response = await (request(
       Method.patch,
       "/api/v1/accounts/verify_credentials",
       authenticated: true,
@@ -102,7 +103,7 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
         /// TODO: implement fields_attributes
         "fields_attributes": null,
       },
-    );
+    ) as FutureOr<Response>);
 
     return Account.fromJson(json.decode(response.body));
   }
@@ -114,20 +115,22 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
   /// - authenticated
   /// - read read:accounts
   Future<List<Account>> followers(String id, {int limit = 40}) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/accounts/$id/followers",
       authenticated: true,
       payload: {
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
     /// TODO: implement link headers for pagination
 
-    return body.map((m) => Account.fromJson(m)).toList();
+    return body
+        .map((m) => Account.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// Accounts which the given account is following, if network is not hidden by the account owner.
@@ -137,20 +140,22 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
   /// - authenticated
   /// - read read:accounts
   Future<List<Account>> following(String id, {int limit = 40}) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/accounts/$id/following",
       authenticated: true,
       payload: {
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
     /// TODO: implement link headers for pagination
 
-    return body.map((m) => Account.fromJson(m)).toList();
+    return body
+        .map((m) => Account.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// Statuses posted to the given account.
@@ -164,13 +169,13 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
     bool onlyMedia = false,
     bool pinned = false,
     bool excludeReplies = false,
-    String maxId,
-    String sinceId,
-    String minId,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
     bool excludeReblogs = false,
   }) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/accounts/$id/statuses",
       authenticated: true,
@@ -183,13 +188,13 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
         "limit": limit.toString(),
         "exclude_reblogs": excludeReblogs.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
     /// TODO: implement link headers for pagination
 
-    return body.map((m) => Status.fromJson(m)).toList();
+    return body.map((m) => Status.fromJson(m as Map<String, dynamic>)).toList();
   }
 
   /// Follow the given account.
@@ -199,14 +204,14 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
   /// - authenticated
   /// - write:follows follow
   Future<Relationship> follow(String id, {bool reblogs = true}) async {
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/accounts/$id/follow",
       authenticated: true,
       payload: {
         "reblogs": reblogs.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     return Relationship.fromJson(json.decode(response.body));
   }
@@ -218,11 +223,11 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
   /// - authenticated
   /// - write:follows follow
   Future<Relationship> unfollow(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/accounts/$id/unfollow",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     return Relationship.fromJson(json.decode(response.body));
   }
@@ -234,18 +239,20 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
   /// - authenticated
   /// - read read:follows
   Future<List<Relationship>> relationships(List<String> ids) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/accounts/relationships",
       authenticated: true,
       payload: {
         "ids": ids,
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
-    return body.map((m) => Relationship.fromJson(m)).toList();
+    return body
+        .map((m) => Relationship.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// Search for matching accounts by username or display name.
@@ -260,7 +267,7 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
     bool resolve = false,
     bool following = false,
   }) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/accounts/search",
       authenticated: true,
@@ -270,10 +277,12 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
         "resolve": resolve.toString(),
         "following": following.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
-    return body.map((m) => Account.fromJson(m)).toList();
+    return body
+        .map((m) => Account.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 }

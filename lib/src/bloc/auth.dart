@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:async/async.dart';
+import 'package:http/http.dart' show post;
 import 'package:mastodon_dart/src/data/account.dart';
 import 'package:mastodon_dart/src/data/application.dart';
 import 'package:mastodon_dart/src/mastodon.dart';
-import 'package:async/async.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:http/http.dart' show post;
 
 /// This class ensures that data being added to a sink cannot be null
 class NullInterceptorSink<T> extends DelegatingStreamSink<T> {
@@ -45,7 +46,7 @@ class AuthBloc {
   AuthBloc(
     this.mastodon,
     this.website, {
-    this.storage,
+    required this.storage,
     this.redirectUris = "urn:ietf:wg:oauth:2.0:oob",
     this.clientName = "mastodon_dart",
     this.scopes = const ["write", "read", "follow", "push"],
@@ -74,17 +75,17 @@ class AuthBloc {
   }
 
   final _initalized = Completer();
-  final _account = BehaviorSubject<Account>();
+  final _account = BehaviorSubject<Account?>();
   final _app = BehaviorSubject<AuthenticatedApplication>();
-  final _code = BehaviorSubject<String>();
+  final _code = BehaviorSubject<String?>();
   final _uri = BehaviorSubject<Uri>();
-  final _token = BehaviorSubject<String>();
+  final _token = BehaviorSubject<String?>();
 
-  Sink<String> get codeSink => NullInterceptorSink(_code.sink);
+  Sink<String?> get codeSink => NullInterceptorSink(_code.sink);
 
-  ValueStream<Account> get account => _account.stream;
+  ValueStream<Account?> get account => _account.stream;
   ValueStream<Uri> get uri => _uri.stream;
-  ValueStream<String> get token => _token.stream;
+  ValueStream<String?> get token => _token.stream;
   bool get hasAccount => _account.value != null;
   Future get initalized => _initalized.future;
 
@@ -123,7 +124,7 @@ class AuthBloc {
   ///
   /// If the code validates, it will automatically trigger the
   /// authentication process. It does not wait for confirmation.
-  void _handleCode(String code, AuthenticatedApplication app) {
+  void _handleCode(String? code, AuthenticatedApplication app) {
     if (code == null || app == null) {
       return;
     }
@@ -139,7 +140,7 @@ class AuthBloc {
       },
     ).then((authResponse) {
       print(authResponse.body);
-      final results = Token.fromJson(jsonDecode(authResponse?.body));
+      final results = Token.fromJson(jsonDecode(authResponse.body));
 
       final token = results.accessToken;
 
@@ -150,7 +151,7 @@ class AuthBloc {
 
   /// Saves, sets, and verifies a token.
   /// Then adds the [Account] to [_account.add]
-  Future<void> _handleToken(String token) async {
+  Future<void> _handleToken(String? token) async {
     if (token != null) {
       if (token != await storage.fetchToken) {
         await storage.saveToken(token);

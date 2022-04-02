@@ -17,13 +17,13 @@ part 'results.g.dart';
 )
 class Results {
   /// Accounts which match the given query
-  final List<Account> accounts;
+  final List<Account>? accounts;
 
   /// Statuses which match the given query
-  final List<Status> statuses;
+  final List<Status>? statuses;
 
   /// Hashtags which match the given query
-  final List<Tag> hashtags;
+  final List<Tag>? hashtags;
 
   Results({
     this.accounts,

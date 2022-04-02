@@ -1,12 +1,12 @@
 import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:rxdart/rxdart.dart' hide Notification;
 
-typedef NotificationsGetter = Future<List<Notification>> Function(String maxId);
+typedef NotificationsGetter = Future<List<Notification>> Function(String? maxId);
 
 /// This bloc handles retrieving Notifications
 class NotificationsBloc {
   final NotificationsGetter fetchNotifications;
-  final Stream<dynamic> notificationsStream;
+  final Stream<dynamic>? notificationsStream;
 
   NotificationsBloc(this.fetchNotifications, {this.notificationsStream}) {
     _requestingMore
@@ -17,7 +17,7 @@ class NotificationsBloc {
     notificationsStream?.listen(_handlePayload);
   }
 
-  final Map<String, Notification> _store = {};
+  final Map<String?, Notification> _store = {};
 
   final _requestingMore = BehaviorSubject<bool>.seeded(true);
   final _notifications = BehaviorSubject<List<Notification>>();
@@ -66,7 +66,7 @@ class NotificationsBloc {
   /// Sort [_store.values] and emit a new event to [_notifications]
   _updateNotifications() {
     final _sortedStatuses = _store.values.toList()
-      ..sort((a, b) => b.id.compareTo(a.id));
+      ..sort((a, b) => b.id!.compareTo(a.id!));
 
     _notifications.add(_sortedStatuses);
   }

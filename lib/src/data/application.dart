@@ -13,14 +13,14 @@ part 'application.g.dart';
 )
 class Application {
   /// The name of your application
-  final String name;
+  final String? name;
 
   /// The website associated with your application
   @JsonKey(nullable: true)
-  final Uri website;
+  final Uri? website;
 
   /// Used for Push Streaming API. Returned with POST /api/v1/apps
-  final String vapid_key;
+  final String? vapid_key;
 
   Application({
     this.name,
@@ -46,17 +46,17 @@ class Application {
 )
 class AuthenticatedApplication extends Application {
   /// The name of your application
-  final String name;
+  final String? name;
 
   /// The website associated with your application
   @JsonKey(nullable: true)
-  final Uri website;
+  final Uri? website;
 
   /// The clientId associated with your application
-  final String clientId;
+  final String? clientId;
 
   /// The clientSecret associated with your application
-  final String clientSecret;
+  final String? clientSecret;
 
   AuthenticatedApplication({
     this.name,

@@ -14,10 +14,10 @@ part 'user_follows_list.g.dart';
 )
 class UserFollowsList {
   /// The internal database ID of the lis
-  final String id;
+  final String? id;
 
   /// The user-defined title of the list
-  final String title;
+  final String? title;
 
   UserFollowsList({this.id, this.title});
 

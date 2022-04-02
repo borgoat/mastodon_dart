@@ -13,7 +13,7 @@ part 'attachment.g.dart';
 )
 class Attachment {
   /// The ID of the attachment in the database
-  final String id;
+  final String? id;
 
   /// The type of the attachment, enumerated in [AttachmentType]
   /// - unknown = unsupported or unrecognized file type
@@ -21,21 +21,21 @@ class Attachment {
   /// - gifv = Looping, soundless animation
   /// - video = Video clip
   /// - audio = Audio track
-  final AttachmentType type;
+  final AttachmentType? type;
 
   /// The location of the original full-size attachment
-  final Uri url;
+  final Uri? url;
 
   /// The location of a scaled-down preview of the attachment
-  final Uri previewUrl;
+  final Uri? previewUrl;
 
   /// The location of the full-size original attachment on the remote website
   @JsonKey(nullable: true)
-  final Uri remoteUrl;
+  final Uri? remoteUrl;
 
   /// A shorter URL for the attachment
   @JsonKey(nullable: true)
-  final Uri textUrl;
+  final Uri? textUrl;
 
   /// Metadata returned by Paperclip
   /// May contain subtrees small and original, as well as various other top-level properties.
@@ -46,11 +46,11 @@ class Attachment {
 
   /// Alternate text that describes what is in the media attachment, to be used for the visually impaired or when media attachments do not load
   @JsonKey(nullable: true)
-  final String description;
+  final String? description;
 
   /// A hash computed by the [BlurHash algorithm](https://github.com/woltapp/blurhash), for generating colorful preview thumbnails when media has not been downloaded yet
   @JsonKey(nullable: true)
-  final String blurhash;
+  final String? blurhash;
 
   Attachment({
     this.id,

@@ -11,9 +11,9 @@ class MockFilters {
   Future<Filter> createFilter(
     String phrase,
     List<FilterContext> context, {
-    bool irreversible,
-    bool wholeWord,
-    Duration expiresIn,
+    bool? irreversible,
+    bool? wholeWord,
+    Duration? expiresIn,
   }) =>
       Future.value(Filter.mock());
 
@@ -27,9 +27,9 @@ class MockFilters {
     String id,
     String phrase,
     List<FilterContext> context, {
-    bool irreversible,
-    bool wholeWord,
-    Duration expiresIn,
+    bool? irreversible,
+    bool? wholeWord,
+    Duration? expiresIn,
   }) =>
       Future.value(Filter.mock());
 

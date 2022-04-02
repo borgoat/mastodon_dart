@@ -5,7 +5,7 @@ import 'authentication.dart';
 import 'exception.dart';
 
 mixin Utilities on Authentication {
-  Future<Response> request(
+  Future<Response?> request(
     Method method,
     String path, {
     bool authenticated = false,
@@ -35,7 +35,7 @@ mixin Utilities on Authentication {
       _headers.addAll({"Authorization": "Bearer $token"});
     }
 
-    Response response;
+    Response? response;
 
     switch (method) {
       case Method.get:

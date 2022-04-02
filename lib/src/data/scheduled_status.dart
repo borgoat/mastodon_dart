@@ -15,10 +15,10 @@ part 'scheduled_status.g.dart';
   fieldRename: FieldRename.snake,
 )
 class ScheduledStatus {
-  final String id;
-  final DateTime scheduledAt;
-  final List<Params> params;
-  final List<Attachment> mediaAttachments;
+  final String? id;
+  final DateTime? scheduledAt;
+  final List<Params>? params;
+  final List<Attachment>? mediaAttachments;
 
   ScheduledStatus({
     this.id,
@@ -55,14 +55,14 @@ class ScheduledStatus {
   fieldRename: FieldRename.snake,
 )
 class Params {
-  final String text;
-  final String inReplyToId;
-  final List<String> mediaIds;
-  final bool sensitive;
-  final bool spoilerText;
-  final Visibility visibility;
-  final DateTime scheduledAt;
-  final String applicationId;
+  final String? text;
+  final String? inReplyToId;
+  final List<String>? mediaIds;
+  final bool? sensitive;
+  final bool? spoilerText;
+  final Visibility? visibility;
+  final DateTime? scheduledAt;
+  final String? applicationId;
 
   Params({
     this.text,

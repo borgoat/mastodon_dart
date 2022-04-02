@@ -13,37 +13,37 @@ part 'relationship.g.dart';
 )
 class Relationship {
   /// The account id
-  final String id;
+  final String? id;
 
   /// Are you following this user?
-  final bool following;
+  final bool? following;
 
   /// Do you have a pending follow request for this user?
-  final bool requested;
+  final bool? requested;
 
   /// Are you featuring this user on your profile?
-  final bool endorsed;
+  final bool? endorsed;
 
   /// Are you followed by this user?
-  final bool followedBy;
+  final bool? followedBy;
 
   /// Are you muting this user?
-  final bool muting;
+  final bool? muting;
 
   /// Are you muting notifications from this user?
-  final bool mutingNotifications;
+  final bool? mutingNotifications;
 
   /// Are you receiving this user's boosts in your home timeline?
-  final bool showingReblogs;
+  final bool? showingReblogs;
 
   /// Are you blocking this user?
-  final bool blocking;
+  final bool? blocking;
 
   /// Are you blocking this user's domain?
-  final bool domainBlocking;
+  final bool? domainBlocking;
 
   /// Is this user blocking you?
-  final bool blockedBy;
+  final bool? blockedBy;
 
   Relationship({
     this.id,

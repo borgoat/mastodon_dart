@@ -1,6 +1,7 @@
-import '../library.dart';
+import 'dart:async';
 
 import '../../src/mock/endpoints/lists.dart';
+import '../library.dart';
 
 mixin Lists on Authentication, Utilities implements MockLists {
   /// GET /api/v1/lists
@@ -8,15 +9,17 @@ mixin Lists on Authentication, Utilities implements MockLists {
   /// - authenticated (requires user)
   /// - read read:lists
   Future<List<UserFollowsList>> lists() async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/lists",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
-    return body.map((m) => UserFollowsList.fromJson(m)).toList();
+    return body
+        .map((m) => UserFollowsList.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// GET /api/v1/accounts/:id/lists
@@ -24,15 +27,17 @@ mixin Lists on Authentication, Utilities implements MockLists {
   /// - authenticated (requires user)
   /// - read read:lists
   Future<List<UserFollowsList>> listsByAccount(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/accounts/$id/lists",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
-    return body.map((m) => UserFollowsList.fromJson(m)).toList();
+    return body
+        .map((m) => UserFollowsList.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// GET /api/v1/lists/:id/accounts
@@ -40,18 +45,20 @@ mixin Lists on Authentication, Utilities implements MockLists {
   /// - authenticated (requires user)
   /// - read read:lists
   Future<List<Account>> listAccounts(String id, {int limit = 40}) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/lists/$id/accounts",
       authenticated: true,
       payload: {
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
-    return body.map((m) => Account.fromJson(m)).toList();
+    return body
+        .map((m) => Account.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// GET /api/v1/lists/:id
@@ -59,11 +66,11 @@ mixin Lists on Authentication, Utilities implements MockLists {
   /// - authenticated (requires user)
   /// - read read:lists
   Future<UserFollowsList> list(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/lists/$id",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     return UserFollowsList.fromJson(json.decode(response.body));
   }
@@ -73,14 +80,14 @@ mixin Lists on Authentication, Utilities implements MockLists {
   /// - authenticated (requires user)
   /// - write write:lists
   Future<UserFollowsList> createList(String title) async {
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/lists",
       authenticated: true,
       payload: {
         "title": title,
       },
-    );
+    ) as FutureOr<Response>);
 
     return UserFollowsList.fromJson(json.decode(response.body));
   }
@@ -90,14 +97,14 @@ mixin Lists on Authentication, Utilities implements MockLists {
   /// - authenticated (requires user)
   /// - write write:lists
   Future<UserFollowsList> updateList(String id, String title) async {
-    final response = await request(
+    final response = await (request(
       Method.put,
       "/api/v1/lists/$id",
       authenticated: true,
       payload: {
         "title": title,
       },
-    );
+    ) as FutureOr<Response>);
 
     return UserFollowsList.fromJson(json.decode(response.body));
   }

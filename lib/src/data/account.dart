@@ -15,70 +15,70 @@ part 'account.g.dart';
 )
 class Account {
   /// The account id
-  final String id;
+  final String? id;
 
   /// The username of the account, not including domain
-  final String username;
+  final String? username;
 
   /// The Webfinger account URI. Equal to username for local users, or username@domain for remote users
-  final String acct;
+  final String? acct;
 
   /// The location of the user's profile page
-  final Uri url;
+  final Uri? url;
 
   /// The profile's display name
-  final String displayName;
+  final String? displayName;
 
   /// The profile's bio / description
-  final String note;
+  final String? note;
 
   /// An image icon that is shown next to statuses and in the profile
-  final Uri avatar;
+  final Uri? avatar;
 
   /// A static version of the avatar. Equal to avatar if its value is a static image; different if avatar is an animated GIF
-  final Uri avatarStatic;
+  final Uri? avatarStatic;
 
   /// An image banner that is shown above the profile and in profile cards
-  final Uri header;
+  final Uri? header;
 
   /// A static version of the header. Equal to header if its value is a static image; different if header is an animated GIF
-  final Uri headerStatic;
+  final Uri? headerStatic;
 
   /// Whether the account manually approves follow requests
-  final bool locked;
+  final bool? locked;
 
   /// Custom emoji entities to be used when rendering the profile. If none, an empty array will be returned
-  final List<Emoji> emojis;
+  final List<Emoji>? emojis;
 
   /// Whether the account has opted into discovery features such as the profile directory
-  final bool discoverable;
+  final bool? discoverable;
 
   /// When the account was created
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   /// How many statuses are attached to this account
-  final int statusesCount;
+  final int? statusesCount;
 
   /// The reported followers of this profile
-  final int followersCount;
+  final int? followersCount;
 
   /// The reported follows of this profile
-  final int followingCount;
+  final int? followingCount;
 
   /// Indicates that the profile is currently inactive and that its user has moved to a new account
   @JsonKey(nullable: true)
-  final Account moved;
+  final Account? moved;
 
   /// Additional metadata attached to a profile as name-value pairs
   @JsonKey(nullable: true)
-  final List<Field> fields;
+  final List<Field>? fields;
 
   /// A presentational flag. Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot
   @JsonKey(nullable: true)
-  final bool bot;
+  final bool? bot;
 
   /// The time and date the last status was posted at
-  final DateTime lastStatusAt;
+  final DateTime? lastStatusAt;
 
   Account({
     this.id,
@@ -141,14 +141,14 @@ class Account {
 )
 class Field {
   /// The key of a given field's key-value pai
-  final String name;
+  final String? name;
 
   /// The value associated with the [name] key
-  final String value;
+  final String? value;
 
   /// Timestamp of when the server verified a URL value for a rel="me” link
   @JsonKey(nullable: true)
-  final DateTime verifiedAt;
+  final DateTime? verifiedAt;
 
   Field({
     this.name,
@@ -175,10 +175,10 @@ class Field {
 )
 class Source {
   /// Profile bio
-  final String note;
+  final String? note;
 
   /// Metadata about the account
-  final List<Field> fields;
+  final List<Field>? fields;
 
   /// The default post privacy to be used for new statuses
   /// - public = Public post
@@ -186,18 +186,18 @@ class Source {
   /// - private = Followers-only post
   /// - direct = Direct post
   @JsonKey(nullable: true)
-  final String privacy;
+  final String? privacy;
 
   /// Whether new statuses should be marked sensitive by default
   @JsonKey(nullable: true)
-  final bool sensitive;
+  final bool? sensitive;
 
   /// The default posting language for new statuses
   @JsonKey(nullable: true)
   final dynamic language;
 
   /// The number of pending follow requests
-  final int followRequestsCount;
+  final int? followRequestsCount;
 
   Source({
     this.privacy,
@@ -221,17 +221,17 @@ class Source {
 )
 class Token {
   /// An OAuth token to be used for authorization
-  final String accessToken;
+  final String? accessToken;
 
   /// The OAuth token type. Mastodon uses `Bearer` tokens
-  final String tokenType;
+  final String? tokenType;
 
   /// The OAuth scopes granted by this token, space-separated
-  final String scope;
+  final String? scope;
 
   /// When the token was generated
   @JsonKey(fromJson: _secondsSinceEpoch)
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   Token({
     this.accessToken,

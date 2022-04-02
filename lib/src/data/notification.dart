@@ -15,20 +15,20 @@ part 'notification.g.dart';
 )
 class Notification {
   /// The id of the notification in the database
-  final String id;
+  final String? id;
 
   /// The type of event that resulted in the notification. Enumerated by [NotificationType]
-  final NotificationType type;
+  final NotificationType? type;
 
   /// The timestamp of the notification
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   /// The account that performed the action that generated the notification
-  final Account account;
+  final Account? account;
 
   /// Status that was the object of the notification, e.g. in mentions, reblogs, favourites, or polls
   @JsonKey(nullable: true)
-  final Status status;
+  final Status? status;
 
   Notification({
     this.id,

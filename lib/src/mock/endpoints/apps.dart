@@ -5,9 +5,9 @@ class MockApps {
   /// https://docs.joinmastodon.org/api/rest/apps/#post-api-v1-apps
   Future<AuthenticatedApplication> appCredentials(
     Uri website, [
-    String clientName,
-    String redirectUris,
-    List<String> scopes,
+    String? clientName,
+    String? redirectUris,
+    List<String>? scopes,
   ]) =>
       Future.value(AuthenticatedApplication.mock());
 

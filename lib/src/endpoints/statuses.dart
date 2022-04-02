@@ -1,5 +1,7 @@
-import '../library.dart';
+import 'dart:async';
+
 import '../../src/mock/endpoints/statuses.dart';
+import '../library.dart';
 
 mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// GET /api/v1/statuses/:id
@@ -7,10 +9,10 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - public
   /// - read read:statuses
   Future<Status> status(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/statuses/$id",
-    );
+    ) as FutureOr<Response>);
 
     return Status.fromJson(json.decode(response.body));
   }
@@ -22,10 +24,10 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   ///
   /// NOTE: Public if the status is public
   Future<Context> context(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/statuses/$id/context",
-    );
+    ) as FutureOr<Response>);
 
     return Context.fromJson(json.decode(response.body));
   }
@@ -34,11 +36,11 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   ///
   /// - public
   /// - read read:statuses
-  Future<Card> card(String id) async {
-    final response = await request(
+  Future<Card?> card(String id) async {
+    final response = await (request(
       Method.get,
       "/api/v1/statuses/$id/card",
-    );
+    ) as FutureOr<Response>);
 
     final map = Map<String, dynamic>.from(json.decode(response.body));
 
@@ -54,17 +56,19 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - public
   /// - read read:statuses
   Future<List<Account>> rebloggedBy(String id, {int limit = 40}) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/statuses/$id/reblogged_by",
       payload: {
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
-    return body.map((m) => Account.fromJson(m)).toList();
+    return body
+        .map((m) => Account.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// GET /api/v1/statuses/:id/favourited_by
@@ -72,17 +76,19 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - public
   /// - read read:statuses
   Future<List<Account>> favouritedBy(String id, {int limit = 40}) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/statuses/$id/favourited_by",
       payload: {
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
-    return body.map((m) => Account.fromJson(m)).toList();
+    return body
+        .map((m) => Account.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// POST /api/v1/statuses
@@ -90,18 +96,18 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - authenticated
   /// - write write:statuses
   Future<Status> publishStatus({
-    String status,
-    String inReplyToId,
-    List<String> mediaIds,
-    bool sensitive = false,
-    String spoilerText,
-    Visibility visibility,
-    DateTime scheduledAt,
+    String? status,
+    String? inReplyToId,
+    List<String>? mediaIds,
+    bool? sensitive = false,
+    String? spoilerText,
+    Visibility? visibility,
+    DateTime? scheduledAt,
     dynamic language,
   }) async {
     assert(status != null || (mediaIds != null && mediaIds.isNotEmpty));
 
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/statuses",
       authenticated: true,
@@ -114,7 +120,7 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
         "scheduled_at": scheduledAt?.toIso8601String(),
         "language": language?.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     return Status.fromJson(json.decode(response.body));
   }
@@ -143,7 +149,7 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - authenticated
   /// - write write:statuses
   Future<Status> reblog(String id) async {
-    Response response;
+    Response? response;
 
     try {
       response = await request(
@@ -158,7 +164,7 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
       }
     }
 
-    return Status.fromJson(json.decode(response.body));
+    return Status.fromJson(json.decode(response!.body));
   }
 
   /// POST /api/v1/statuses/:id/unreblog
@@ -166,11 +172,11 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - authenticated
   /// - write write:statuses
   Future<Status> unreblog(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/statuses/$id/unreblog",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     return Status.fromJson(json.decode(response.body));
   }
@@ -180,11 +186,11 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - authenticated
   /// - write write:statuses
   Future<Status> pinStatus(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/statuses/$id/pin",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     return Status.fromJson(json.decode(response.body));
   }
@@ -194,11 +200,11 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - authenticated
   /// - write write:statuses
   Future<Status> unpinStatus(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.post,
       "/api/v1/statuses/$id/unpin",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     return Status.fromJson(json.decode(response.body));
   }

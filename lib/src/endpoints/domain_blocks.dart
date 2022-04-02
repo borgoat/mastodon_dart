@@ -1,6 +1,7 @@
-import '../library.dart';
+import 'dart:async';
 
 import '../../src/mock/endpoints/domain_blocks.dart';
+import '../library.dart';
 
 mixin DomainBlocks on Authentication, Utilities implements MockDomainBlocks {
   /// GET /api/v1/domain_blocks
@@ -8,14 +9,14 @@ mixin DomainBlocks on Authentication, Utilities implements MockDomainBlocks {
   /// - authenticated (requires user)
   /// - read read:blocks follow
   Future<List<Uri>> domainBlocks({int limit = 40}) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/domain_blocks",
       authenticated: true,
       payload: {
         "limit": limit.toString(),
       },
-    );
+    ) as FutureOr<Response>);
 
     final body = List<String>.from(json.decode(response.body));
 

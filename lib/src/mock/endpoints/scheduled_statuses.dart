@@ -14,7 +14,7 @@ class MockScheduledStatuses {
   /// PUT /api/v1/scheduled_statuses/:id
   /// https://docs.joinmastodon.org/api/rest/scheduled-statuses/#put-api-v1-scheduled-statuses-id
   Future<ScheduledStatus> updateScheduledStatus(String id,
-          {DateTime scheduledAt}) =>
+          {DateTime? scheduledAt}) =>
       Future.value(ScheduledStatus.mock());
 
   /// DELETE /api/v1/scheduled_statuses/:id

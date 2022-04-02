@@ -4,11 +4,11 @@ class MockNotifications {
   /// GET /api/v1/notifications
   /// https://docs.joinmastodon.org/api/rest/notifications/#get-api-v1-notifications
   Future<List<Notification>> notifications({
-    String maxId,
-    String sinceId,
-    String minId,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
-    List<NotificationType> excludeTypes,
+    List<NotificationType>? excludeTypes,
   }) =>
       Future.value(List.generate(limit, (_) => Notification.mock()));
 

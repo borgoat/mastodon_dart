@@ -1,6 +1,7 @@
-import '../library.dart';
+import 'dart:async';
 
 import '../../src/mock/endpoints/notifications.dart';
+import '../library.dart';
 
 mixin Notifications on Authentication, Utilities implements MockNotifications {
   /// GET /api/v1/notifications
@@ -8,14 +9,14 @@ mixin Notifications on Authentication, Utilities implements MockNotifications {
   /// - authentication (requires user)
   /// - read read:notifications
   Future<List<Notification>> notifications({
-    String maxId,
-    String sinceId,
-    String minId,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
-    List<NotificationType> excludeTypes,
-    String account_id,
+    List<NotificationType>? excludeTypes,
+    String? account_id,
   }) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/notifications",
       authenticated: true,
@@ -27,13 +28,15 @@ mixin Notifications on Authentication, Utilities implements MockNotifications {
         "exclude_types": excludeTypes?.map((e) => e.toString().split(".").last),
         "account_id": account_id,
       }..removeWhere((_, value) => value == null),
-    );
+    ) as FutureOr<Response>);
 
     final body = List<Map>.from(json.decode(response.body));
 
     /// TODO: implement link headers for pagination
 
-    return body.map((m) => Notification.fromJson(m)).toList();
+    return body
+        .map((m) => Notification.fromJson(m as Map<String, dynamic>))
+        .toList();
   }
 
   /// GET /api/v1/notifications/:id
@@ -41,11 +44,11 @@ mixin Notifications on Authentication, Utilities implements MockNotifications {
   /// - authentication (requires user)
   /// - read read:notifications
   Future<Notification> notification(String id) async {
-    final response = await request(
+    final response = await (request(
       Method.get,
       "/api/v1/notifications/$id",
       authenticated: true,
-    );
+    ) as FutureOr<Response>);
 
     return Notification.fromJson(json.decode(response.body));
   }

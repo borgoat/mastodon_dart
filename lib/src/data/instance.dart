@@ -14,45 +14,45 @@ part 'instance.g.dart';
 )
 class Instance {
   /// The domain name of the instance
-  final Uri uri;
+  final Uri? uri;
 
   /// The title of the website
-  final String title;
+  final String? title;
 
   /// Admin-defined description of the Mastodon site
-  final String description;
+  final String? description;
 
   /// A shorter description defined by the admin
-  final String shortDescription;
+  final String? shortDescription;
 
   /// An email that may be contacted for any inquiries
-  final String email;
+  final String? email;
 
   /// The version of Mastodon installed on the instance
-  final String version;
+  final String? version;
 
   /// Primary langauges of the website and its staff
   final dynamic languages;
 
   /// Whether registrations are enabled
-  final bool registrations;
+  final bool? registrations;
 
   /// Whether registrations require moderator approval
-  final bool approvalRequired;
+  final bool? approvalRequired;
 
   /// URLs of interest for clients apps
   final dynamic urls;
 
   /// See [InstanceStats]
-  final InstanceStats stats;
+  final InstanceStats? stats;
 
   /// Banner image for the website
   @JsonKey(nullable: true)
-  final Uri thumbnail;
+  final Uri? thumbnail;
 
   /// A user that can be contacted, as an alternative to email
   @JsonKey(nullable: true)
-  final Account contactAccount;
+  final Account? contactAccount;
 
   Instance({
     this.uri,
@@ -99,13 +99,13 @@ class Instance {
 )
 class InstanceStats {
   /// Users registered on this instance
-  final int userCount;
+  final int? userCount;
 
   /// Statuses authored by users on instance
-  final int statusCount;
+  final int? statusCount;
 
   /// Domains federated with this instance
-  final int domainCount;
+  final int? domainCount;
 
   InstanceStats({
     this.userCount,

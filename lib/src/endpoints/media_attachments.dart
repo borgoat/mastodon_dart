@@ -1,6 +1,7 @@
-import '../library.dart';
+import 'dart:async';
 
 import '../../src/mock/endpoints/media_attachments.dart';
+import '../library.dart';
 
 mixin MediaAttachments
     on Authentication, Utilities
@@ -10,8 +11,8 @@ mixin MediaAttachments
   /// - authenticated (requires user)
   /// - write write:media
   Future<Attachment> uploadAttachment(dynamic file,
-      {String description, dynamic focus}) async {
-    final response = await request(
+      {String? description, dynamic focus}) async {
+    final response = await (request(
       Method.post,
       "/api/v1/media",
       authenticated: true,
@@ -20,7 +21,7 @@ mixin MediaAttachments
         "description": description,
         "focus": focus,
       },
-    );
+    ) as FutureOr<Response>);
 
     return Attachment.fromJson(json.decode(response.body));
   }
@@ -30,8 +31,8 @@ mixin MediaAttachments
   /// - authenticated (requires user)
   /// - write write:media
   Future<Attachment> updateAttachment(String id,
-      {String description, dynamic focus}) async {
-    final response = await request(
+      {String? description, dynamic focus}) async {
+    final response = await (request(
       Method.put,
       "/api/v1/media/$id",
       authenticated: true,
@@ -39,7 +40,7 @@ mixin MediaAttachments
         "description": description,
         "focus": focus,
       }..removeWhere((_, value) => value == null),
-    );
+    ) as FutureOr<Response>);
 
     return Attachment.fromJson(json.decode(response.body));
   }

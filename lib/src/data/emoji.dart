@@ -12,20 +12,20 @@ part 'emoji.g.dart';
 )
 class Emoji {
   /// The name of the custom emoji
-  final String shortcode;
+  final String? shortcode;
 
   /// A link to the custom emoji
-  final Uri url;
+  final Uri? url;
 
   /// A link to a static copy of the custom emoji
-  final Uri staticUrl;
+  final Uri? staticUrl;
 
   /// Whether this Emoji should be visible in the picker or unlisted
-  final bool visibleInPicker;
+  final bool? visibleInPicker;
 
   /// Used for sorting custom emoji in the picker
   @JsonKey(nullable: true)
-  final String category;
+  final String? category;
 
   Emoji({
     this.shortcode,

@@ -6,7 +6,7 @@ import 'package:mastodon_dart/src/data/status.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 mixin Websockets on Authentication {
-  WebSocketChannel _channel(String stream, {String list, String tag}) {
+  WebSocketChannel _channel(String stream, {String? list, String? tag}) {
     assert(websocketFactory != null,
         "[Mastodon] We need a websocketFactory to create websockets!");
 
@@ -21,7 +21,7 @@ mixin Websockets on Authentication {
       }..removeWhere((_, value) => value == null),
     );
 
-    return websocketFactory(uri);
+    return websocketFactory!(uri);
   }
 
   /// https://docs.joinmastodon.org/api/streaming/#websocket

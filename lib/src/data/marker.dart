@@ -5,10 +5,10 @@
 /// https://docs.joinmastodon.org/entities/marker/
 class Marker {
   /// Information about the user's position in the home timeline
-  Position home;
+  Position? home;
 
   /// Information about the user's position in their notifications
-  Position notifications;
+  Position? notifications;
 
   Marker({this.home, this.notifications});
 
@@ -22,10 +22,10 @@ class Marker {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.home != null) {
-      data['home'] = this.home.toJson();
+      data['home'] = this.home!.toJson();
     }
     if (this.notifications != null) {
-      data['notifications'] = this.notifications.toJson();
+      data['notifications'] = this.notifications!.toJson();
     }
     return data;
   }
@@ -34,13 +34,13 @@ class Marker {
 /// Timeline position information
 class Position {
   /// The ID of the most recently viewed entity
-  String lastReadId;
+  String? lastReadId;
 
   /// The timestamp of when the marker was set
-  String updatedAt;
+  String? updatedAt;
 
   /// Used for locking to prevent write conflicts
-  int version;
+  int? version;
 
   Position({this.lastReadId, this.version, this.updatedAt});
 

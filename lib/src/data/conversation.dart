@@ -15,17 +15,17 @@ part 'conversation.g.dart';
 )
 class Conversation {
   /// Local database ID of the conversation
-  final String id;
+  final String? id;
 
   /// Participants in the conversation
-  final List<Account> accounts;
+  final List<Account>? accounts;
 
   /// Is the conversation currently marked as unread?
-  final bool unread;
+  final bool? unread;
 
   /// The last status in the conversation, to be used for optional display
   @JsonKey(nullable: true)
-  final Status lastStatus;
+  final Status? lastStatus;
 
   Conversation({
     this.id,
