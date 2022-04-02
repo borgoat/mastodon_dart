@@ -1,14 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mastodon_dart/src/mock/properties.dart';
-import 'poll.dart';
+
 import 'account.dart';
 import 'application.dart';
 import 'attachment.dart';
 import 'card.dart';
 import 'emoji.dart';
 import 'mention.dart';
-import 'tag.dart';
+import 'poll.dart';
 import 'shared/visibility.dart';
+import 'tag.dart';
 
 part 'status.g.dart';
 
@@ -196,7 +197,7 @@ class Status {
           Tag.mock(),
           Tag.mock(),
         ]),
-        card = Card.mock(),
+        card = MockProperties.maybe(Card.mock()),
         application = Application.mock(),
         language = MockProperties.string,
         pinned = MockProperties.boolean,

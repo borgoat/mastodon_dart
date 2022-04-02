@@ -2,7 +2,7 @@ import 'dart:math' show Random;
 
 class MockProperties {
   static bool get boolean => randomItem([true, false]);
-  static int get integer => Random().nextInt(999);
+  static int get integer => Random().nextInt(99000);
   static String get string => Random().nextInt(99999999).toString();
   static Uri get uri => Uri.parse(randomItem(["google.com", "github.com"]));
 
@@ -56,8 +56,8 @@ class MockProperties {
       ]));
 
   static Uri get headerUri => Uri.parse(randomItem([
-        "https://www.canva.com/signup?signupRedirect=%2Fdesign%3Fcreate%3Dtrue%26media%3DMAA_AQWx-AQ%26layoutQuery%3D*&loginRedirect=%2Fdesign%3Fcreate%3Dtrue%26media%3DMAA_AQWx-AQ%26layoutQuery%3D*&referrer=twitter-post-templates",
-        "https://www.canva.com/signup?signupRedirect=%2Fdesign%3Fcreate%3Dtrue%26media%3DMAA_AfG8OoE%26layoutQuery%3D*&loginRedirect=%2Fdesign%3Fcreate%3Dtrue%26media%3DMAA_AfG8OoE%26layoutQuery%3D*&referrer=twitter-post-templates",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/%C3%89tang_de_Thau_and_S%C3%A8te.jpg/640px-%C3%89tang_de_Thau_and_S%C3%A8te.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Landscape_with_rainbow_and_the_Old_Bridge_over_the_Nam_Khan_river_in_Luang_Prabang_Laos.jpg/640px-Landscape_with_rainbow_and_the_Old_Bridge_over_the_Nam_Khan_river_in_Luang_Prabang_Laos.jpg",
         "https://marketplace.canva.com/MAA_AYqRMnc/1/0/thumbnail_large/canva-snowy-mountaintops-profile-header-MAA_AYqRMnc.jpg",
         "https://marketplace.canva.com/MAA_AcTcock/1/0/thumbnail_large/canva-purple-flower-profile-header-MAA_AcTcock.jpg",
       ]));
@@ -167,4 +167,12 @@ class MockProperties {
     "Richelle Lafreniere",
     "Christin Session",
   ];
+
+  /// Create object, or don't. ¯\_(ツ)_/¯
+  static T? maybe<T>(T object) {
+    if (Random().nextBool())
+      return object;
+    else
+      return null;
+  }
 }
