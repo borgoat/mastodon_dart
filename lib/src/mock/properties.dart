@@ -1,9 +1,11 @@
 import 'dart:math' show Random;
 
 class MockProperties {
-  static bool get boolean => randomItem([true, false]);
-  static int get integer => Random().nextInt(99000);
-  static String get string => Random().nextInt(99999999).toString();
+  static final _random = Random();
+
+  static bool get boolean => _random.nextBool();
+  static int get integer => _random.nextInt(99000);
+  static String get string => _random.nextInt(99999999).toString();
   static Uri get uri => Uri.parse(randomItem(["google.com", "github.com"]));
 
   static String get text => randomItem(_comments);
@@ -15,10 +17,10 @@ class MockProperties {
 
   static String get tag => randomItem(["happy", "yum", "water", "fluffy"]);
   static String get version =>
-      "v${Random().nextInt(9) + 1}.${Random().nextInt(9)}.${Random().nextInt(9)}+${Random().nextInt(99) + 1}";
+      "v${_random.nextInt(9) + 1}.${_random.nextInt(9)}.${_random.nextInt(9)}+${_random.nextInt(99) + 1}";
 
   static DateTime get pastDate => DateTime.now()
-      .subtract(Duration(seconds: Random().nextInt(30 * 24 * 60 * 60)));
+      .subtract(Duration(seconds: _random.nextInt(30 * 24 * 60 * 60)));
 
   static String get subject => randomItem([
         "Your Next Phone May Have a Hole in the Screen",
@@ -35,8 +37,8 @@ class MockProperties {
       ]);
 
   static Uri get avatarUri => Uri.parse(randomItem([
-        "https://randomuser.me/api/portraits/men/${Random().nextInt(99)}.jpg",
-        "https://randomuser.me/api/portraits/women/${Random().nextInt(99)}.jpg",
+        "https://randomuser.me/api/portraits/men/${_random.nextInt(99)}.jpg",
+        "https://randomuser.me/api/portraits/women/${_random.nextInt(99)}.jpg",
       ]));
 
   static Uri get iconUri => Uri.parse(randomItem([
@@ -65,10 +67,10 @@ class MockProperties {
   static String get username =>
       randomItem(["one", "lucky", "red", "sly"]) +
       randomItem(["gerbal", "fedi", "masto", "ella"]) +
-      Random().nextInt(9999).toString();
+      _random.nextInt(9999).toString();
 
   static T randomItem<T>(List<T> list) =>
-      list[Random().nextInt(list.length - 1)];
+      list[_random.nextInt(list.length - 1)];
 
   static List<T> randomSublist<T>(List<T> list) => list.sublist(list.length);
 
@@ -169,10 +171,5 @@ class MockProperties {
   ];
 
   /// Create object, or don't. ¯\_(ツ)_/¯
-  static T? maybe<T>(T object) {
-    if (Random().nextBool())
-      return object;
-    else
-      return null;
-  }
+  static T? maybe<T>(T object) => boolean ? object : null;
 }
