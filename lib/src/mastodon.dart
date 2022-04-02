@@ -1,6 +1,6 @@
+import 'package:mastodon_dart/mock_mastodon_dart.dart';
+
 import 'authentication.dart';
-import 'utilities.dart';
-import 'validators.dart';
 import 'endpoints/accounts.dart';
 import 'endpoints/apps.dart';
 import 'endpoints/blocks.dart';
@@ -25,6 +25,8 @@ import 'endpoints/scheuled_statuses.dart';
 import 'endpoints/search.dart';
 import 'endpoints/statuses.dart';
 import 'endpoints/timelines.dart';
+import 'utilities.dart';
+import 'validators.dart';
 import 'websockets/websockets.dart';
 
 class _Base = Authentication with Utilities, Validators;
@@ -54,7 +56,8 @@ class _Rest = _Base
         ScheduledStatuses,
         Search,
         Statuses,
-        Timelines;
+        Timelines
+    implements MockMastodon;
 
 /// A Mastodon object that provides access to Mastodon endpoints
 class Mastodon = _Rest with Websockets;
